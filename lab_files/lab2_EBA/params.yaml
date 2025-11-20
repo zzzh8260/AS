@@ -1,0 +1,6 @@
+# simulation parameters
+duration: 200
+screen_width: 900
+animate: 1
+animation_frame_delay: 0
+plot_data: 1

@@ -1,0 +1,14 @@
+# Homeostat parameters
+n_units: 4
+upper_limit: 20
+lower_limit: -20
+upper_viability: 1
+lower_viability: -1
+adapt_fun: random_val
+adapt_enabled: 1
+weights_set_size: 100
+test_interval: 10
+# simulation parameters
+duration: 1000
+# plot parameters
+show_legends: 1

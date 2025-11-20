@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandbox_V1_4.pheromones &mdash; Sandbox 1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=0ed52906"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sandbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">General information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../systems.html">Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stimuli_sensors.html">Sources of stimuli and sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuators.html">Actuators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../controllers.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../environment.html">Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../noise_sources.html">Sources of noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../disturbance_sources.html">Disturbances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../simulation.html">Simulation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sandbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Sandbox_V1_4.pheromones</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Sandbox_V1_4.pheromones</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.stimuli</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># subclass LightSource to create a LightSource which has a quantity. The quantity decays from 1 towards 0, is controlled</span>
+<span class="c1"># by a PheromoneManager, and in this class it affects the brightness of the light, as perceived by LightSensors, and</span>
+<span class="c1"># the opacity of the light when it is drawn in pygame and matplotlib</span>
+<div class="viewcode-block" id="PheromoneSource">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.PheromoneSource">[docs]</a>
+<span class="k">class</span> <span class="nc">PheromoneSource</span><span class="p">(</span><span class="n">LightSource</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to represent a deposit of pheromones on the ground. The :class:`PheromoneSource` extends :class:`LightSource`, so pheromones can be detected with ordinary light sensors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># construct pheromone</span>
+<div class="viewcode-block" id="PheromoneSource.__init__">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.PheromoneSource.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">brightness</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gradient</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;inv_sq&#39;</span><span class="p">,</span> <span class="n">is_on</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            __init__(self, x, y, brightness=1, gradient=0.01, model=&#39;inv_sq&#39;, is_on=True)</span>
+
+<span class="sd">            :param x: The x-coordinate of the pheromone. Defaults to ``None``.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The y-coordinate of the pheromone. Defaults to ``None``.</span>
+<span class="sd">            :type y: float</span>
+
+<span class="sd">            :param brightness: The brightness of the light, at its own coordinate (but this will be multiplied by the pheromone&#39;s concentration).</span>
+<span class="sd">            :type brightness: float</span>
+
+<span class="sd">            :param gradient: The gradient of brightness decay with distance, when the linear model is used.</span>
+<span class="sd">            :type gradient: float</span>
+
+<span class="sd">            :param model: The light decay model. ``inv_sq``, ``linear``, and ``binary`` are valid models.</span>
+<span class="sd">            :type model: str</span>
+
+<span class="sd">            :param is_on: A flag which can be use to determine whether or not a pheromone can be detected. Defaults to ``True``. This allows for the pheromone to be turned on and off.</span>
+<span class="sd">            :type is_on: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">brightness</span><span class="o">=</span><span class="n">brightness</span><span class="p">,</span> <span class="n">gradient</span><span class="o">=</span><span class="n">gradient</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">is_on</span><span class="o">=</span><span class="n">is_on</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+    <span class="c1"># as the quantity of pheromone decays, the light dims</span>
+<div class="viewcode-block" id="PheromoneSource.get_brightness_at">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.PheromoneSource.get_brightness_at">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_brightness_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to get the concentration of the pheromone (or brightness of light, as it is perceived) at the given xy coordinates, according to the light source&#39;s ``model``, and which angles it can be perceived from (determined by the light&#39;s ``spread`` attribute).</span>
+
+<span class="sd">            :param x: The x-component of the position to find the brightness at.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The y-component of the position to find the brightness at.</span>
+<span class="sd">            :type y: float</span>
+
+<span class="sd">            :param theta: The orientation of the sensor at the position to find the brightness at. For lights which are not omni-directional, this will affect whether the sensor can detect the light.</span>
+<span class="sd">            :type theta: float</span>
+
+<span class="sd">            :return: The perceived brightness at the given coordinates, which is the light brightness multiplied by the pheromone concentration (``quantity``).</span>
+<span class="sd">            :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_brightness_at</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span></div>
+
+
+    <span class="c1"># draw pheromone in the specified matplotlib axes</span>
+<div class="viewcode-block" id="PheromoneSource.draw">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.PheromoneSource.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to draw the pheromone in the specified matplotlib axes. The concentration of pheromones is used to set the opacity of the pheromone.</span>
+
+<span class="sd">            :param ax: The Matplotlib axes to draw the light on.</span>
+<span class="sd">            :type ax: Matplotlib axes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quantity</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quantity</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;r.&#39;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># draw pheromone in a pygame display</span>
+<div class="viewcode-block" id="PheromoneSource.pygame_draw">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.PheromoneSource.pygame_draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">pygame_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to draw the pheromone in the specified PyGame display.</span>
+<span class="sd">            A :class:`PheromoneSource` is drawn as a circle with colour specified by the light source&#39;s ``colour`` attribute, multiplied by its pheromone concentration.</span>
+
+<span class="sd">            :param screen: The PyGame display to draw on.</span>
+<span class="sd">            :type screen: PyGame display</span>
+
+<span class="sd">            :param scale: The scale to draw at.</span>
+<span class="sd">            :type scale: float</span>
+
+<span class="sd">            :param shiftx: The offset from centre in the x-axis for drawing.</span>
+<span class="sd">            :type shiftx: float</span>
+
+<span class="sd">            :param shifty: The offset from centre in the y-axis for drawing.</span>
+<span class="sd">            :type shifty: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># pygame.draw.circle(screen, center=(scale*self.x+shiftx, scale*self.y+shifty), color=pygame.Color(255, int(255*(1-self.quantity)), int(255*(1-self.quantity))), width=width, radius=scale*0.7)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="n">shiftx</span><span class="p">,</span> <span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="n">shifty</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">quantity</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">scale</span><span class="o">*</span><span class="mf">0.7</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># a class to handle a collection of pheromones, which can be added to and removed when they decay to 0</span>
+<div class="viewcode-block" id="PheromoneManager">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager">[docs]</a>
+<span class="k">class</span> <span class="nc">PheromoneManager</span><span class="p">(</span><span class="n">System</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class for managing the decay of a list of :class:`PheromoneSource` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># construct pheromone manager</span>
+<div class="viewcode-block" id="PheromoneManager.__init__">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pheromones</span><span class="o">=</span><span class="p">[],</span> <span class="n">decay_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :param pheromones: Defaults to an empty list.</span>
+<span class="sd">            :type pheromones: list(:class:`PheromoneSource`)</span>
+
+<span class="sd">            :param decay_rate: The rate at which all pheromones managed by an instance of this class will decay by. In every simulation step, the amount of pheromone in each :class:`PheromoneSource` in the ``pheromones`` list decays by ``dt * decay_rate``, until the point when the pheromone&#39;s level falls below ``0`` and the :class:`PheromoneSource` is deleted. Defaults to ``0.01``.</span>
+<span class="sd">            :type decay_rate: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span> <span class="o">=</span> <span class="n">pheromones</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decay_rate</span> <span class="o">=</span> <span class="n">decay_rate</span>  <span class="c1"># rate of pheromone decay per unit of simulation time</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></div>
+
+
+    <span class="c1"># add pheromone at given coordinate</span>
+<div class="viewcode-block" id="PheromoneManager.add_pheromone_at">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.add_pheromone_at">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_pheromone_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method for adding a :class:`PheromoneSource` at the given coordinates.</span>
+
+<span class="sd">            :param x: The x-coordinate to add the pheromone source at.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The y-coordinate to add the pheromone source at.</span>
+<span class="sd">            :type y: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PheromoneSource</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
+
+
+    <span class="c1"># add an already existing PheromoneSource (not currently used)</span>
+<div class="viewcode-block" id="PheromoneManager.add_pheromone">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.add_pheromone">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_pheromone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method for adding an existing :class:`PheromoneSource` to the ``pheromones`` list.</span>
+
+<span class="sd">            :param p: The :class:`PheromoneSource` to add to the list.</span>
+<span class="sd">            :type p: :class:`PheromoneSource`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+    <span class="c1"># step pheromone manager</span>
+<div class="viewcode-block" id="PheromoneManager.step">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Step :class:`PheromoneManager` forwards in time.</span>
+
+<span class="sd">            Every :class:`PheromoneSource` belonging to the :class:`PheromoneManager` will decay, and vanish if completely depleted.</span>
+
+<span class="sd">            :param dt: The interval of time to integrate the pheromones over. Currently unused here.</span>
+<span class="sd">            :type dt: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">quantity</span> <span class="o">-=</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">decay_rate</span>  <span class="c1"># all pheromones decay by the same amount</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">quantity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># remove all pheromones which are depleted</span></div>
+
+
+    <span class="c1"># draw all pheromones in specified matplotlib axes</span>
+<div class="viewcode-block" id="PheromoneManager.draw">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to draw all the instances of :class:`PheromoneSource` belonging to a :class:`PheromoneManager` on Matplotlib axes.</span>
+
+<span class="sd">            :param ax: The Matplotlib axes to draw the Arena on.</span>
+<span class="sd">            :type ax: Matplotlib axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span></div>
+
+
+    <span class="c1"># draw all pheromones in pygame screen</span>
+<div class="viewcode-block" id="PheromoneManager.pygame_draw">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.pygame_draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">pygame_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to draw all the instances of :class:`PheromoneSource` belonging to a :class:`PheromoneManager` on a PyGame display.</span>
+
+<span class="sd">            :param screen: The PyGame display to draw on.</span>
+<span class="sd">            :type screen: PyGame display</span>
+
+<span class="sd">            :param scale: The scale to draw at.</span>
+<span class="sd">            :type scale: float</span>
+
+<span class="sd">            :param shiftx: The offset from centre in the x-axis for drawing.</span>
+<span class="sd">            :type shiftx: float</span>
+
+<span class="sd">            :param shifty: The offset from centre in the y-axis for drawing.</span>
+<span class="sd">            :type shifty: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">pygame_draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PheromoneManager.reset">
+<a class="viewcode-back" href="../../environment.html#Sandbox_V1_4.PheromoneManager.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Reset a :class:`PheromoneManager` to its original state upon its construction, e.g. so that it can be re-used in another simulation run.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># empty pheromone list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pheromones</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chris Johnson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

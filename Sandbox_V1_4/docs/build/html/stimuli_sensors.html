@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sources of stimuli and sensors &mdash; Sandbox 1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=0ed52906"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Agents" href="agents.html" />
+    <link rel="prev" title="Systems" href="systems.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Sandbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">General information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="systems.html">Systems</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sources of stimuli and sensors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#stimulus-class">Stimulus class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.Stimulus"><code class="docutils literal notranslate"><span class="pre">Stimulus</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Stimulus.__init__"><code class="docutils literal notranslate"><span class="pre">Stimulus.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Stimulus.get_data"><code class="docutils literal notranslate"><span class="pre">Stimulus.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Stimulus.get_distance"><code class="docutils literal notranslate"><span class="pre">Stimulus.get_distance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Stimulus.reset"><code class="docutils literal notranslate"><span class="pre">Stimulus.reset()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lightsource-class">LightSource class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.LightSource"><code class="docutils literal notranslate"><span class="pre">LightSource</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.__init__"><code class="docutils literal notranslate"><span class="pre">LightSource.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.draw"><code class="docutils literal notranslate"><span class="pre">LightSource.draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.get_brightness_at"><code class="docutils literal notranslate"><span class="pre">LightSource.get_brightness_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.get_data"><code class="docutils literal notranslate"><span class="pre">LightSource.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.inv_sq_model"><code class="docutils literal notranslate"><span class="pre">LightSource.inv_sq_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.linear_model"><code class="docutils literal notranslate"><span class="pre">LightSource.linear_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.pygame_draw"><code class="docutils literal notranslate"><span class="pre">LightSource.pygame_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSource.reset"><code class="docutils literal notranslate"><span class="pre">LightSource.reset()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pheromonesource-class">PheromoneSource class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.PheromoneSource"><code class="docutils literal notranslate"><span class="pre">PheromoneSource</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.PheromoneSource.__init__"><code class="docutils literal notranslate"><span class="pre">PheromoneSource.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.PheromoneSource.draw"><code class="docutils literal notranslate"><span class="pre">PheromoneSource.draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.PheromoneSource.get_brightness_at"><code class="docutils literal notranslate"><span class="pre">PheromoneSource.get_brightness_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.PheromoneSource.pygame_draw"><code class="docutils literal notranslate"><span class="pre">PheromoneSource.pygame_draw()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sensor-class">Sensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.Sensor"><code class="docutils literal notranslate"><span class="pre">Sensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.__init__"><code class="docutils literal notranslate"><span class="pre">Sensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.draw"><code class="docutils literal notranslate"><span class="pre">Sensor.draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.get_data"><code class="docutils literal notranslate"><span class="pre">Sensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.pygame_draw"><code class="docutils literal notranslate"><span class="pre">Sensor.pygame_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.reset"><code class="docutils literal notranslate"><span class="pre">Sensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Sensor.update"><code class="docutils literal notranslate"><span class="pre">Sensor.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delayblock-class">DelayBlock class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.DelayBlock"><code class="docutils literal notranslate"><span class="pre">DelayBlock</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.DelayBlock.__init__"><code class="docutils literal notranslate"><span class="pre">DelayBlock.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.DelayBlock.step"><code class="docutils literal notranslate"><span class="pre">DelayBlock.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lightsensor-class">LightSensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.LightSensor"><code class="docutils literal notranslate"><span class="pre">LightSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.__init__"><code class="docutils literal notranslate"><span class="pre">LightSensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.clone"><code class="docutils literal notranslate"><span class="pre">LightSensor.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.get_data"><code class="docutils literal notranslate"><span class="pre">LightSensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.pygame_draw"><code class="docutils literal notranslate"><span class="pre">LightSensor.pygame_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.reset"><code class="docutils literal notranslate"><span class="pre">LightSensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.LightSensor.step"><code class="docutils literal notranslate"><span class="pre">LightSensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#energysensor-class">EnergySensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.EnergySensor"><code class="docutils literal notranslate"><span class="pre">EnergySensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.EnergySensor.__init__"><code class="docutils literal notranslate"><span class="pre">EnergySensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.EnergySensor.get_data"><code class="docutils literal notranslate"><span class="pre">EnergySensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.EnergySensor.reset"><code class="docutils literal notranslate"><span class="pre">EnergySensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.EnergySensor.step"><code class="docutils literal notranslate"><span class="pre">EnergySensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#motorspeedsensor-class">MotorSpeedSensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor"><code class="docutils literal notranslate"><span class="pre">MotorSpeedSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor.__init__"><code class="docutils literal notranslate"><span class="pre">MotorSpeedSensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor.get_data"><code class="docutils literal notranslate"><span class="pre">MotorSpeedSensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor.reset"><code class="docutils literal notranslate"><span class="pre">MotorSpeedSensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor.step"><code class="docutils literal notranslate"><span class="pre">MotorSpeedSensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#headingsensor-class">HeadingSensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.HeadingSensor"><code class="docutils literal notranslate"><span class="pre">HeadingSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.HeadingSensor.__init__"><code class="docutils literal notranslate"><span class="pre">HeadingSensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.HeadingSensor.get_data"><code class="docutils literal notranslate"><span class="pre">HeadingSensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.HeadingSensor.reset"><code class="docutils literal notranslate"><span class="pre">HeadingSensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.HeadingSensor.step"><code class="docutils literal notranslate"><span class="pre">HeadingSensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compasssensor-class">CompassSensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.CompassSensor"><code class="docutils literal notranslate"><span class="pre">CompassSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.CompassSensor.__init__"><code class="docutils literal notranslate"><span class="pre">CompassSensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.CompassSensor.get_data"><code class="docutils literal notranslate"><span class="pre">CompassSensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.CompassSensor.reset"><code class="docutils literal notranslate"><span class="pre">CompassSensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.CompassSensor.step"><code class="docutils literal notranslate"><span class="pre">CompassSensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#floorpatchsensor-class">FloorPatchSensor class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor.__init__"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor.get_data"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor.pygame_draw"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor.pygame_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor.reset"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor.step"><code class="docutils literal notranslate"><span class="pre">FloorPatchSensor.step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#radio-class">Radio class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Sandbox_V1_4.Radio"><code class="docutils literal notranslate"><span class="pre">Radio</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.__init__"><code class="docutils literal notranslate"><span class="pre">Radio.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.add_radio"><code class="docutils literal notranslate"><span class="pre">Radio.add_radio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.get_data"><code class="docutils literal notranslate"><span class="pre">Radio.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.receive_messages"><code class="docutils literal notranslate"><span class="pre">Radio.receive_messages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.reset"><code class="docutils literal notranslate"><span class="pre">Radio.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Sandbox_V1_4.Radio.set_message"><code class="docutils literal notranslate"><span class="pre">Radio.set_message()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="actuators.html">Actuators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controllers.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="noise_sources.html">Sources of noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disturbance_sources.html">Disturbances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sandbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sources of stimuli and sensors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/stimuli_sensors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sources-of-stimuli-and-sensors">
+<h1>Sources of stimuli and sensors<a class="headerlink" href="#sources-of-stimuli-and-sensors" title="Link to this heading"></a></h1>
+<section id="stimulus-class">
+<h2>Stimulus class<a class="headerlink" href="#stimulus-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Stimulus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">Stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#Stimulus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Stimulus" title="Link to this definition"></a></dt>
+<dd><p>An abstract class to represent a source of sensory stimulation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Stimulus.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#Stimulus.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Stimulus.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-coordinate of the stimulus. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-coordinate of the stimulus. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The angular orientation of the stimulus. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>is_on</strong> (<em>bool</em>) – A flag which can be use to determine whether or not a stimulus can be detected. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. This allows for the stimulus to be turned on and off, but the actual response to the state of this flag is determined elsewhere, e.g. in <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a>. Also, a sensor implementation could choose to ignore this flag and detect a stimulus even when it is not on.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Stimulus.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#Stimulus.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Stimulus.get_data" title="Link to this definition"></a></dt>
+<dd><p>A method to return the data of the stimulus.
+Note: this is not likely to be particularly useful, as it only contains the original state, as recorded by <a class="reference internal" href="systems.html#Sandbox_V1_4.System" title="Sandbox_V1_4.System"><code class="xref py py-class docutils literal notranslate"><span class="pre">System</span></code></a>, and the current state of “is_on”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dict containing the data returned from <code class="xref py py-meth docutils literal notranslate"><span class="pre">Sandbox.System.get_data()</span></code>, plus <code class="docutils literal notranslate"><span class="pre">is_on</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Stimulus.get_distance">
+<span class="sig-name descname"><span class="pre">get_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#Stimulus.get_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Stimulus.get_distance" title="Link to this definition"></a></dt>
+<dd><p>A method for finding the Euclidean distance from the passed in x- and y-coordinates to the position of this stimulus, assuming it has position - this method should not be invoked on an instance of <a class="reference internal" href="#Sandbox_V1_4.Stimulus" title="Sandbox_V1_4.Stimulus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stimulus</span></code></a> which does not have position.</p>
+<blockquote>
+<div><p>The passed in x- and y- coordinates can be used to get the distance from any position, but they will typically be the coordinates of a sensor which will potentially detect this stimulus.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-component of the position to find the distance from.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-component of the position to find the distance from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Stimulus.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#Stimulus.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Stimulus.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the <a class="reference internal" href="#Sandbox_V1_4.Stimulus" title="Sandbox_V1_4.Stimulus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stimulus</span></code></a> to its original state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="lightsource-class">
+<h2>LightSource class<a class="headerlink" href="#lightsource-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">LightSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brightness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'inv_sq'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'yellow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource" title="Link to this definition"></a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#Sandbox_V1_4.Stimulus" title="Sandbox_V1_4.Stimulus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stimulus</span></code></a>, <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> is a class which represents a light source. It is possible to set the “model” of intensity of a <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> to be either an inverse square law of decay with distance, or a linear one, or for the light to be detected with constant brightness at all distances.</p>
+<a class="reference internal image-reference" href="images/LinearLightSource.svg"><img alt="Linear light decay model" class="align-center" src="images/LinearLightSource.svg" width="600" /></a>
+<a class="reference internal image-reference" href="images/InvSqLightSource.svg"><img alt="Inverse square light decay model" class="align-center" src="images/InvSqLightSource.svg" width="600" /></a>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-coordinate of the light.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-coordinate of the light.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The orientation of the light.</p></li>
+<li><p><strong>spread</strong> – The angular spread of light around <code class="docutils literal notranslate"><span class="pre">theta</span></code>. Can be used to create lights which are only detectable from certain angles. WARNING: this feature has not been used or tested in a long while, and is not guaranteed to work with this new <em>Sandbox</em> version.</p></li>
+<li><p><strong>brightness</strong> (<em>float</em>) – The brightness of the light, at its own coordinate.</p></li>
+<li><p><strong>gradient</strong> (<em>float</em>) – The gradient of brightness decay with distance, when the linear model is used.</p></li>
+<li><p><strong>model</strong> (<em>str</em>) – The light decay model. <code class="docutils literal notranslate"><span class="pre">inv_sq</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code>, and <code class="docutils literal notranslate"><span class="pre">binary</span></code> are valid models.</p></li>
+<li><p><strong>is_on</strong> (<em>bool</em>) – A flag which can be use to determine whether or not a light can be detected. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. This allows for the light to be turned on and off.</p></li>
+<li><p><strong>colour</strong> (<em>str</em>) – The colour of the light. Note: this is for drawing only - no system currently implemented in <em>Sandbox</em> can detect a light’s RGB colour.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – A light source’s label defines a group. Any <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a> with the same label attribute will detect all, and only, light sources which are in its list and also in that group. A <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a> with no label will detect any <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> in its list, regardless of label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the light source in the specified matplotlib axes.
+A <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> which is switched on is drawn as a circle with colour specified by the light source’s <code class="docutils literal notranslate"><span class="pre">colour</span></code> attribute, with a smaller circle in its center which is orange coloured.  A <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> which is not on will have its outer circle coloured in grey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Matplotlib axes.</em>) – The Matplotlib axes to draw the light on.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.get_brightness_at">
+<span class="sig-name descname"><span class="pre">get_brightness_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.get_brightness_at"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.get_brightness_at" title="Link to this definition"></a></dt>
+<dd><p>A method to get the brightness of the light (as it is perceived) at the given xy coordinates, according to the light source’s <code class="docutils literal notranslate"><span class="pre">model</span></code>, and which angles it can be perceived from (determined by the light’s <code class="docutils literal notranslate"><span class="pre">spread</span></code> attribute).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-component of the position to find the brightness at.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-component of the position to find the brightness at.</p></li>
+<li><p><strong>sensor_angle</strong> (<em>float</em>) – The orientation of the sensor at the position to find the brightness at. For lights which are not omni-directional, this will affect whether the sensor can detect the light.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The perceived brightness at the given coordinates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.get_data" title="Link to this definition"></a></dt>
+<dd><p>Get the <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a>’s data. This method, if used, relies on the assumption that the <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> and its properties are static.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a>’s data in dict form.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.inv_sq_model">
+<span class="sig-name descname"><span class="pre">inv_sq_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.inv_sq_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.inv_sq_model" title="Link to this definition"></a></dt>
+<dd><p>A method to find the perceived brightness of the light source at the given distance, when the inverse square decay model is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dist</strong> (<em>float</em>) – The distance from the light source.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The perceived brightness.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.linear_model">
+<span class="sig-name descname"><span class="pre">linear_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.linear_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.linear_model" title="Link to this definition"></a></dt>
+<dd><p>A method to find the perceived brightness of the light source at the given distance, when the linear decay model is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dist</strong> (<em>float</em>) – The distance from the light source.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The perceived brightness.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.pygame_draw">
+<span class="sig-name descname"><span class="pre">pygame_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shiftx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.pygame_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.pygame_draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the light source in the specified PyGame display.
+A <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> which is switched on is drawn as a circle with colour specified by the light source’s <code class="docutils literal notranslate"><span class="pre">colour</span></code> attribute, with a smaller circle in its center which is orange coloured.  A <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> which is not on will have its outer circle coloured in grey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> (<em>PyGame display</em>) – The PyGame display to draw on.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale to draw at.</p></li>
+<li><p><strong>shiftx</strong> (<em>float</em>) – The offset from centre in the x-axis for drawing.</p></li>
+<li><p><strong>shifty</strong> (<em>float</em>) – The offset from centre in the y-axis for drawing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSource.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/stimuli.html#LightSource.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSource.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> to its original state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pheromonesource-class">
+<h2>PheromoneSource class<a class="headerlink" href="#pheromonesource-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.PheromoneSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">PheromoneSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brightness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inv_sq'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/pheromones.html#PheromoneSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.PheromoneSource" title="Link to this definition"></a></dt>
+<dd><p>A class to represent a deposit of pheromones on the ground. The <a class="reference internal" href="#Sandbox_V1_4.PheromoneSource" title="Sandbox_V1_4.PheromoneSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PheromoneSource</span></code></a> extends <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a>, so pheromones can be detected with ordinary light sensors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.PheromoneSource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brightness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradient</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inv_sq'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/pheromones.html#PheromoneSource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.PheromoneSource.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-coordinate of the pheromone. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-coordinate of the pheromone. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>brightness</strong> (<em>float</em>) – The brightness of the light, at its own coordinate (but this will be multiplied by the pheromone’s concentration).</p></li>
+<li><p><strong>gradient</strong> (<em>float</em>) – The gradient of brightness decay with distance, when the linear model is used.</p></li>
+<li><p><strong>model</strong> (<em>str</em>) – The light decay model. <code class="docutils literal notranslate"><span class="pre">inv_sq</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code>, and <code class="docutils literal notranslate"><span class="pre">binary</span></code> are valid models.</p></li>
+<li><p><strong>is_on</strong> (<em>bool</em>) – A flag which can be use to determine whether or not a pheromone can be detected. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. This allows for the pheromone to be turned on and off.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.PheromoneSource.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/pheromones.html#PheromoneSource.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.PheromoneSource.draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the pheromone in the specified matplotlib axes. The concentration of pheromones is used to set the opacity of the pheromone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Matplotlib axes.</em>) – The Matplotlib axes to draw the light on.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.PheromoneSource.get_brightness_at">
+<span class="sig-name descname"><span class="pre">get_brightness_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/pheromones.html#PheromoneSource.get_brightness_at"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.PheromoneSource.get_brightness_at" title="Link to this definition"></a></dt>
+<dd><p>A method to get the concentration of the pheromone (or brightness of light, as it is perceived) at the given xy coordinates, according to the light source’s <code class="docutils literal notranslate"><span class="pre">model</span></code>, and which angles it can be perceived from (determined by the light’s <code class="docutils literal notranslate"><span class="pre">spread</span></code> attribute).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-component of the position to find the brightness at.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-component of the position to find the brightness at.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The orientation of the sensor at the position to find the brightness at. For lights which are not omni-directional, this will affect whether the sensor can detect the light.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The perceived brightness at the given coordinates, which is the light brightness multiplied by the pheromone concentration (<code class="docutils literal notranslate"><span class="pre">quantity</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.PheromoneSource.pygame_draw">
+<span class="sig-name descname"><span class="pre">pygame_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shiftx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifty</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/pheromones.html#PheromoneSource.pygame_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.PheromoneSource.pygame_draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the pheromone in the specified PyGame display.
+A <a class="reference internal" href="#Sandbox_V1_4.PheromoneSource" title="Sandbox_V1_4.PheromoneSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PheromoneSource</span></code></a> is drawn as a circle with colour specified by the light source’s <code class="docutils literal notranslate"><span class="pre">colour</span></code> attribute, multiplied by its pheromone concentration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> (<em>PyGame display</em>) – The PyGame display to draw on.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale to draw at.</p></li>
+<li><p><strong>shiftx</strong> (<em>float</em>) – The offset from centre in the x-axis for drawing.</p></li>
+<li><p><strong>shifty</strong> (<em>float</em>) – The offset from centre in the y-axis for drawing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="sensor-class">
+<h2>Sensor class<a class="headerlink" href="#sensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Sensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor" title="Link to this definition"></a></dt>
+<dd><p>An abstract class for representing sensors. The output from a <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a> can be both noisy and delayed, due to the incorporation of a <a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a> and a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Sensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The initial angular orientation of the <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>colour</strong> (<em>str</em>) – The colour of the sensor, for drawing.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – The radius of the sensor, for drawing.</p></li>
+<li><p><strong>enabled</strong> (<em>bool</em>) – A flag for specifying whether or not a sensor is enabled. Only the attribute is implemented here - how to use it is a decision for subclasses, e.g. in <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The source of noise for this sensor. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the sensor in the specified matplotlib axes, as a small coloured circle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ax</strong> (<em>Matplotlib axes</em>) – The Matplotlib axes to draw the sensor on.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A method to get the sensors data, in the form of a dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensor’s data, which includes the data returned from <code class="xref py py-meth docutils literal notranslate"><span class="pre">Sandbox.System.get_data()</span></code>, as well as the sensor’s colour and radius (which are both assumed to be static), and its “enabled” state and “name_str” string.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.pygame_draw">
+<span class="sig-name descname"><span class="pre">pygame_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shiftx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.pygame_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.pygame_draw" title="Link to this definition"></a></dt>
+<dd><p>A method to draw the sensor in the specified PyGame display, as a small coloured circle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> (<em>PyGame display</em>) – The PyGame display to draw on.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale to draw at.</p></li>
+<li><p><strong>shiftx</strong> (<em>float</em>) – The offset from centre in the x-axis for drawing.</p></li>
+<li><p><strong>shifty</strong> (<em>float</em>) – The offset from centre in the y-axis for drawing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset a sensor to its initial state, so it can be reused in later simulations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Sensor.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Sensor.html#Sensor.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Sensor.update" title="Link to this definition"></a></dt>
+<dd><p>A method to implement the addition of noise and a delay to a sensor’s dynamics, as well as keep a record of the sensor’s output.</p>
+<p>All subclasses of <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a> must call this method from the end of their <code class="docutils literal notranslate"><span class="pre">step()</span></code> methods (I’m not happy with this design, and it will be changed in later implementations).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="delayblock-class">
+<h2>DelayBlock class<a class="headerlink" href="#delayblock-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.DelayBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">DelayBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delay_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/DelayBlock.html#DelayBlock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.DelayBlock" title="Link to this definition"></a></dt>
+<dd><p>A class which implements a delay to a signal, currently only used in <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a> classes. The class uses a buffer to store delayed signal values.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.DelayBlock.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/DelayBlock.html#DelayBlock.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.DelayBlock.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delay_n</strong> (<em>int</em>) – the number of simulation steps a signal will be delayed for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.DelayBlock.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/DelayBlock.html#DelayBlock.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.DelayBlock.step" title="Link to this definition"></a></dt>
+<dd><p>Step the delayed signal forwards. Every time the delay block is stepped, the new input is placed in the buffer, and the oldest one is returned as the delayed value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> (<em>any</em>) – The current signal value</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The delayed signal value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="lightsensor-class">
+<h2>LightSensor class<a class="headerlink" href="#lightsensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">LightSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">light_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.stimuli.LightSource"><span class="pre">LightSource</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FOV</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.noise.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'LightSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor" title="Link to this definition"></a></dt>
+<dd><p>A class which represents a light sensor. <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a> inherits both from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">FOV_thing</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">light_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><span class="pre">LightSource</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FOV</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">math.pi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'LightSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>light_sources</strong> (list[<code class="xref py py-class docutils literal notranslate"><span class="pre">Light_Source</span></code>]) – The list of instances of <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> which this sensor can potentially detect.</p></li>
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The initial angular orientation of the <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>FOV</strong> (<em>float</em>) – The sensor’s angular field of view. Defaults to <code class="docutils literal notranslate"><span class="pre">2pi</span></code>.</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – A <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>’s label determines which of the <a class="reference internal" href="#Sandbox_V1_4.LightSource" title="Sandbox_V1_4.LightSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSource</span></code></a> s in its list it can actually detect. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case the sensor will detect all light sources in its list. If a sensor’s <code class="docutils literal notranslate"><span class="pre">label</span></code> attribute is set to some string, then it will only detect light sources which have their <code class="docutils literal notranslate"><span class="pre">label</span></code> attributes set to the same value.</p></li>
+<li><p><strong>enabled</strong> (<em>bool</em>) – A flag for specifying whether or not a light sensor is enabled. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the sensor will not detect anything.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.clone" title="Link to this definition"></a></dt>
+<dd><p>A method to clone a LightSensor. I’m not sure why I wrote this method - it is not used anywhere.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A copy of the sensor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from a <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>current sensor output (activation): <code class="docutils literal notranslate"><span class="pre">data[&quot;activation&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+<li><p>sensor’s field of view: <code class="docutils literal notranslate"><span class="pre">data[&quot;FOV&quot;]</span></code></p></li>
+<li><p>label of light sources which this sensor will detect, if they are also in its list of light sources: <code class="docutils literal notranslate"><span class="pre">data[&quot;label&quot;]</span></code>. If this value is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the sensor will detect lights with any label.</p></li>
+<li><p>list of light sources that the sensor will detect, if they have the same label as it, or its label is <code class="docutils literal notranslate"><span class="pre">None</span></code>: <code class="docutils literal notranslate"><span class="pre">data[&quot;light_sources&quot;]</span></code></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.pygame_draw">
+<span class="sig-name descname"><span class="pre">pygame_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shiftx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.pygame_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.pygame_draw" title="Link to this definition"></a></dt>
+<dd><p>A method for drawing the sensor, as a small circle with lines radiating out from its centre to inidicate the sensor’s FOV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> (<em>PyGame display</em>) – The PyGame display to draw on.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale to draw at.</p></li>
+<li><p><strong>shiftx</strong> (<em>float</em>) – The offset from centre in the x-axis for drawing.</p></li>
+<li><p><strong>shifty</strong> (<em>float</em>) – The offset from centre in the y-axis for drawing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset a sensor to its initial state, by resetting its <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">theta</span></code>, <code class="docutils literal notranslate"><span class="pre">light_sources</span></code>, <code class="docutils literal notranslate"><span class="pre">activation</span></code>, <code class="docutils literal notranslate"><span class="pre">activations</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">enabled</span></code>, and <code class="docutils literal notranslate"><span class="pre">FOV</span></code> attributes to their values at time of construction. If the sensor has a <code class="docutils literal notranslate"><span class="pre">noisemaker</span></code>, then the reset method of that object will also be called.</p>
+<p>Note: this method will not reset any attributes which have been added outside of the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Sandbox.LightSensor.__init__()</span></code> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.LightSensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/LightSensor.html#LightSensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.LightSensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step a light sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.LightSensor" title="Sandbox_V1_4.LightSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">LightSensor</span></code></a> has no dynamics, apart from a potential delay from a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>, so technically is not integrated, but <code class="docutils literal notranslate"><span class="pre">dt</span></code> is passed to this method for consistency with the step methods of other classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor. When the sensor detects multiple light sources, their effects are summed linearly.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="energysensor-class">
+<h2>EnergySensor class<a class="headerlink" href="#energysensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.EnergySensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">EnergySensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'EnergySensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/EnergySensor.html#EnergySensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.EnergySensor" title="Link to this definition"></a></dt>
+<dd><p>A class which represents an energy sensor, for measuring the internal energy level of an <a class="reference internal" href="agents.html#Sandbox_V1_4.Agent" title="Sandbox_V1_4.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.EnergySensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'EnergySensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/EnergySensor.html#EnergySensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.EnergySensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.EnergySensor" title="Sandbox_V1_4.EnergySensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnergySensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.EnergySensor" title="Sandbox_V1_4.EnergySensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnergySensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>agent</strong> (<a class="reference internal" href="agents.html#Sandbox_V1_4.Agent" title="Sandbox_V1_4.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a>) – the agent whose energy level will be detected by the sensor</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.EnergySensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/EnergySensor.html#EnergySensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.EnergySensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from an <a class="reference internal" href="#Sandbox_V1_4.EnergySensor" title="Sandbox_V1_4.EnergySensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnergySensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.EnergySensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/EnergySensor.html#EnergySensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.EnergySensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.EnergySensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/EnergySensor.html#EnergySensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.EnergySensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step an energy sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.EnergySensor" title="Sandbox_V1_4.EnergySensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnergySensor</span></code></a> has no dynamics, apart from a potential delay from a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>, so technically is not integrated, but <code class="docutils literal notranslate"><span class="pre">dt</span></code> is passed to this method for consistency with the step methods of other classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="motorspeedsensor-class">
+<h2>MotorSpeedSensor class<a class="headerlink" href="#motorspeedsensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.MotorSpeedSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">MotorSpeedSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">motor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="actuators.html#Sandbox_V1_4.Motor" title="Sandbox_V1_4.Motor.Motor"><span class="pre">Motor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.noise.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MotorSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/MotorSpeedSensor.html#MotorSpeedSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.MotorSpeedSensor" title="Link to this definition"></a></dt>
+<dd><p>A class to implement a motor speed (technically, velocity, as it has direction) sensor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.MotorSpeedSensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">motor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="actuators.html#Sandbox_V1_4.Motor" title="Sandbox_V1_4.Motor"><span class="pre">Motor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MotorSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/MotorSpeedSensor.html#MotorSpeedSensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.MotorSpeedSensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor" title="Sandbox_V1_4.MotorSpeedSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotorSpeedSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor" title="Sandbox_V1_4.MotorSpeedSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotorSpeedSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>motor</strong> (<a class="reference internal" href="actuators.html#Sandbox_V1_4.Motor" title="Sandbox_V1_4.Motor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motor</span></code></a>) – The motor that the sensor is attached to.</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.MotorSpeedSensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/MotorSpeedSensor.html#MotorSpeedSensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.MotorSpeedSensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from an <a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor" title="Sandbox_V1_4.MotorSpeedSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotorSpeedSensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+<li><p>sensor’s current output (activation): <code class="docutils literal notranslate"><span class="pre">data[&quot;activation&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.MotorSpeedSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/MotorSpeedSensor.html#MotorSpeedSensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.MotorSpeedSensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.MotorSpeedSensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/MotorSpeedSensor.html#MotorSpeedSensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.MotorSpeedSensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step an energy sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.MotorSpeedSensor" title="Sandbox_V1_4.MotorSpeedSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotorSpeedSensor</span></code></a> has no dynamics, apart from a potential delay from a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>, so technically is not integrated, but <code class="docutils literal notranslate"><span class="pre">dt</span></code> is passed to this method for consistency with the step methods of other classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="headingsensor-class">
+<h2>HeadingSensor class<a class="headerlink" href="#headingsensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.HeadingSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">HeadingSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'HeadingSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/HeadingSensor.html#HeadingSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.HeadingSensor" title="Link to this definition"></a></dt>
+<dd><p>A class for detecting the current heading of an <a class="reference internal" href="agents.html#Sandbox_V1_4.Agent" title="Sandbox_V1_4.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a>. For many agents, this will be the same angle as <code class="docutils literal notranslate"><span class="pre">theta</span></code>, the orientation of the agent, but this will not always be the case. E.g. a <a class="reference internal" href="agents.html#Sandbox_V1_4.Bee" title="Sandbox_V1_4.Bee"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bee</span></code></a> can face in one direction and fly in another, so for the bee, <code class="docutils literal notranslate"><span class="pre">heading</span></code> is the direction of flight, which is not the same angle as <code class="docutils literal notranslate"><span class="pre">theta</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.HeadingSensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'HeadingSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/HeadingSensor.html#HeadingSensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.HeadingSensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> (<a class="reference internal" href="agents.html#Sandbox_V1_4.Agent" title="Sandbox_V1_4.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a>) – the agent whose heading will be detected by the sensor</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.HeadingSensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/HeadingSensor.html#HeadingSensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.HeadingSensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from an <a class="reference internal" href="#Sandbox_V1_4.HeadingSensor" title="Sandbox_V1_4.HeadingSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeadingSensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.HeadingSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/HeadingSensor.html#HeadingSensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.HeadingSensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.HeadingSensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/HeadingSensor.html#HeadingSensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.HeadingSensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step a heading sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.HeadingSensor" title="Sandbox_V1_4.HeadingSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeadingSensor</span></code></a> has no dynamics, apart from a potential delay from a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>, so technically is not integrated, but <code class="docutils literal notranslate"><span class="pre">dt</span></code> is passed to this method for consistency with the step methods of other classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="compasssensor-class">
+<h2>CompassSensor class<a class="headerlink" href="#compasssensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.CompassSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">CompassSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'CompassSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/CompassSensor.html#CompassSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.CompassSensor" title="Link to this definition"></a></dt>
+<dd><p>A class for implementing an orientation sensor. If a compass sensor is added to an <a class="reference internal" href="agents.html#Sandbox_V1_4.Agent" title="Sandbox_V1_4.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a> with the same orientation (<code class="docutils literal notranslate"><span class="pre">theta</span></code>) as the agent, then thereafter the sensor can be used to detect the agent’s orientation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.CompassSensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'HeadingSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/CompassSensor.html#CompassSensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.CompassSensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.CompassSensor" title="Sandbox_V1_4.CompassSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompassSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.CompassSensor" title="Sandbox_V1_4.CompassSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompassSensor</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.CompassSensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/CompassSensor.html#CompassSensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.CompassSensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from a <a class="reference internal" href="#Sandbox_V1_4.CompassSensor" title="Sandbox_V1_4.CompassSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompassSensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.CompassSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/CompassSensor.html#CompassSensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.CompassSensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.CompassSensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/CompassSensor.html#CompassSensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.CompassSensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step a compass sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.CompassSensor" title="Sandbox_V1_4.CompassSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompassSensor</span></code></a> has no dynamics, apart from a potential delay from a <a class="reference internal" href="#Sandbox_V1_4.DelayBlock" title="Sandbox_V1_4.DelayBlock"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayBlock</span></code></a>, so technically is not integrated, but <code class="docutils literal notranslate"><span class="pre">dt</span></code> is passed to this method for consistency with the step methods of other classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="floorpatchsensor-class">
+<h2>FloorPatchSensor class<a class="headerlink" href="#floorpatchsensor-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">FloorPatchSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">floor_patches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch.FloorPatch"><span class="pre">FloorPatch</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.noise.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'FloorPatchSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor" title="Link to this definition"></a></dt>
+<dd><p>A class which represents a sensor for detecting coloured patches on the floor. Can detect both <a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatch</span></code></a> and <a class="reference internal" href="environment.html#Sandbox_V1_4.CircularFloorPatch" title="Sandbox_V1_4.CircularFloorPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularFloorPatch</span></code></a> objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">floor_patches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch"><span class="pre">FloorPatch</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noisemaker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><span class="pre">NoiseSource</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'FloorPatchSensor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>floor_patches</strong> (list[<a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatch</span></code></a>]) – The list of instances of <a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatch</span></code></a> which the sensor can potentially detect.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – A <a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor" title="Sandbox_V1_4.FloorPatchSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a>’s label determines which of the <a class="reference internal" href="environment.html#Sandbox_V1_4.FloorPatch" title="Sandbox_V1_4.FloorPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatch</span></code></a> s in its list it can actually detect. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case the sensor will detect all floor patches in its list. If a sensor’s <code class="docutils literal notranslate"><span class="pre">label</span></code> attribute is set to some string, then it will only detect floor patches which have their <code class="docutils literal notranslate"><span class="pre">label</span></code> attributes set to the same value.</p></li>
+<li><p><strong>x</strong> (<em>float</em>) – The initial x-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor" title="Sandbox_V1_4.FloorPatchSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a>.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The initial y-coordinate of the <a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor" title="Sandbox_V1_4.FloorPatchSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a>.</p></li>
+<li><p><strong>noisemaker</strong> (<a class="reference internal" href="noise_sources.html#Sandbox_V1_4.NoiseSource" title="Sandbox_V1_4.NoiseSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseSource</span></code></a>) – The sensor’s source of noise.</p></li>
+<li><p><strong>name_str</strong> (<em>str</em>) – The name of the sensor, used in plotting simulation data.</p></li>
+<li><p><strong>delay_steps</strong> (<em>int</em>) – The number of simulation steps a sensor signal will be delayed for.</p></li>
+<li><p><strong>enabled</strong> (<em>bool</em>) – A flag for specifying whether or not a floor patch is enabled. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the sensor will not detect anything.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get the data from an <a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor" title="Sandbox_V1_4.FloorPatchSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a>, in the form of a string-keyed dict.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>data inherited from <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a>: see <a class="reference internal" href="#Sandbox_V1_4.Sensor" title="Sandbox_V1_4.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></li>
+<li><p>current sensor output (activation): <code class="docutils literal notranslate"><span class="pre">data[&quot;activation&quot;]</span></code></p></li>
+<li><p>history of sensor outputs (activations): <code class="docutils literal notranslate"><span class="pre">data[&quot;activations&quot;]</span></code></p></li>
+<li><p>label of floor patches which this sensor will detect, if they are also in its list of patches: <code class="docutils literal notranslate"><span class="pre">data[&quot;label&quot;]</span></code>. If this value is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the sensor will detect patches with any label.</p></li>
+<li><p>list of floor patches that the sensor will detect, if they have the same label as it, or its label is <code class="docutils literal notranslate"><span class="pre">None</span></code>: <code class="docutils literal notranslate"><span class="pre">data[&quot;light_sources&quot;]</span></code></p></li>
+<li><p>data of sensor’s noise source, if it has one: <code class="docutils literal notranslate"><span class="pre">data[&quot;noises&quot;]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The sensors’s data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor.pygame_draw">
+<span class="sig-name descname"><span class="pre">pygame_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shiftx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor.pygame_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor.pygame_draw" title="Link to this definition"></a></dt>
+<dd><p>A method for drawing the sensor, as a small circle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen</strong> (<em>PyGame display</em>) – The PyGame display to draw on.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale to draw at.</p></li>
+<li><p><strong>shiftx</strong> (<em>float</em>) – The offset from centre in the x-axis for drawing.</p></li>
+<li><p><strong>shifty</strong> (<em>float</em>) – The offset from centre in the y-axis for drawing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor.reset" title="Link to this definition"></a></dt>
+<dd><p>A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.FloorPatchSensor.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/FloorPatchSensor.html#FloorPatchSensor.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.FloorPatchSensor.step" title="Link to this definition"></a></dt>
+<dd><p>A method to step a floor patch sensor forwards in time. A <a class="reference internal" href="#Sandbox_V1_4.FloorPatchSensor" title="Sandbox_V1_4.FloorPatchSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloorPatchSensor</span></code></a> has no dynamics, so technically is not stepped in time, but ‘step’ is used for consistency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>float</em>) – Integration interval - not used here.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The activation (level of stimulation) of the sensor, which will be <code class="docutils literal notranslate"><span class="pre">0</span></code> when no patches are detected. When the sensor detects multiple floor patches, their effects are not summed - the output will only be <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="radio-class">
+<h2>Radio class<a class="headerlink" href="#radio-class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Sandbox_V1_4.</span></span><span class="sig-name descname"><span class="pre">Radio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitter_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">receiver_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio" title="Link to this definition"></a></dt>
+<dd><p>A class to implement a simple 2-way radio. A radio constantly transmits its message. It only receives messages from other radios which are within its own <code class="docutils literal notranslate"><span class="pre">radios</span></code> list. It has separate parameters for the range of its transmitter and of its receiver. Because this radio implements both transmitter and receiver, it appears under both actuators and sensors in this documentation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transmitter_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">receiver_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The radio’s x-coordinate. If the radio is attached to a robot (as in <code class="xref py py-class docutils literal notranslate"><span class="pre">Fauxkilobot</span></code>), then it’s position will track that of the robot.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The radio’s y-coordinate. If the radio is attached to a robot (as in <code class="xref py py-class docutils literal notranslate"><span class="pre">Fauxkilobot</span></code>), then it’s position will track that of the robot.</p></li>
+<li><p><strong>transmitter_range</strong> (<em>float</em>) – Only radios within <code class="docutils literal notranslate"><span class="pre">transmitter_range</span></code> of this radio will possibly receive its message.</p></li>
+<li><p><strong>receiver_range</strong> (<em>float</em>) – This radio will only possibly receive the transmission of radios within <code class="docutils literal notranslate"><span class="pre">receiver_range</span></code> of it.</p></li>
+<li><p><strong>radios</strong> (list(<a class="reference internal" href="#Sandbox_V1_4.Radio" title="Sandbox_V1_4.Radio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Radio</span></code></a>)) – The list of radios which this one can potentially receive messages from. Defaults to <code class="docutils literal notranslate"><span class="pre">[]</span></code> - it will normally be more convenient to add radios to this list <em>after</em> construction, using the <code class="docutils literal notranslate"><span class="pre">add_radio()</span></code> method. For example, if you have <span class="math notranslate nohighlight">\(n\)</span> agents which you want to all communicate with each other, it is probably going to be easiest to construct all of the robots first, and then subsequently connect all of their radios.</p></li>
+<li><p><strong>enabled</strong> (<em>bool</em>) – A flag which can potentially be used to disable a radio. Not used in the current implementation, but will be in future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.add_radio">
+<span class="sig-name descname"><span class="pre">add_radio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.add_radio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.add_radio" title="Link to this definition"></a></dt>
+<dd><p>Add a radio to the list of radios that this one can potentially communicate with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>radio</strong> (<a class="reference internal" href="#Sandbox_V1_4.Radio" title="Sandbox_V1_4.Radio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Radio</span></code></a>) – The radio to add to the list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.get_data" title="Link to this definition"></a></dt>
+<dd><p>A function to get a radios’s data.</p>
+<p>These data, as and when they are included in the returned dict, can be accessed with the following keys:</p>
+<ul class="simple">
+<li><p>enabled state: <code class="docutils literal notranslate"><span class="pre">data[&quot;enabled&quot;]</span></code></p></li>
+<li><p>list of radios that this radio can potentially receive messages from: <code class="docutils literal notranslate"><span class="pre">data[&quot;radios&quot;]</span></code></p></li>
+<li><p>message that this radio is transmitting: <code class="docutils literal notranslate"><span class="pre">data[&quot;message&quot;]</span></code></p></li>
+<li><p>list of messages received in the last simulation step: <code class="docutils literal notranslate"><span class="pre">data[&quot;received_messages&quot;]</span></code></p></li>
+<li><p>transmitter range: <code class="docutils literal notranslate"><span class="pre">data[&quot;transmitter_range&quot;]</span></code></p></li>
+<li><p>receiver range: <code class="docutils literal notranslate"><span class="pre">data[&quot;receiver_range&quot;]</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.receive_messages">
+<span class="sig-name descname"><span class="pre">receive_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.receive_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.receive_messages" title="Link to this definition"></a></dt>
+<dd><p>Receive messages from any in-range radios which this one can potentially communicate with.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset_controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.reset" title="Link to this definition"></a></dt>
+<dd><p>This method resets a radios’s state and simulation data to its initial values, so that it can be used again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reset_controller</strong> (<em>bool</em>) – ONLY LEFT HERE BY MISTAKE - NOT USED AND WILL BE REMOVED LATER.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Sandbox_V1_4.Radio.set_message">
+<span class="sig-name descname"><span class="pre">set_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Sandbox_V1_4/Radio.html#Radio.set_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Sandbox_V1_4.Radio.set_message" title="Link to this definition"></a></dt>
+<dd><p>Set the message which this radio will transmit.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="systems.html" class="btn btn-neutral float-left" title="Systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agents.html" class="btn btn-neutral float-right" title="Agents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chris Johnson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

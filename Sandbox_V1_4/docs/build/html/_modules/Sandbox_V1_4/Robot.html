@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandbox_V1_4.Robot &mdash; Sandbox 1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=0ed52906"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sandbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">General information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../systems.html">Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stimuli_sensors.html">Sources of stimuli and sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuators.html">Actuators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../controllers.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../environment.html">Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../noise_sources.html">Sources of noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../disturbance_sources.html">Disturbances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../simulation.html">Simulation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sandbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Sandbox_V1_4.Robot</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Sandbox_V1_4.Robot</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.stimuli</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.LightSensor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Agent</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Motor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.MotorSpeedSensor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.RobotController</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.noise</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.pygame_functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Robot">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot">[docs]</a>
+<span class="k">class</span> <span class="nc">Robot</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to represent a robot with a differential drive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Robot.__init__">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                       <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                       <span class="n">controller</span><span class="p">:</span> <span class="n">RobotController</span><span class="p">,</span>
+                       <span class="n">sensors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LightSensor</span><span class="p">],</span>
+                       <span class="n">sensor_angles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                       <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">left_motor_max_speed</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                       <span class="n">right_motor_max_speed</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                       <span class="n">left_motor_inertia</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">right_motor_inertia</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">left_motor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">right_motor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">left_motor_reversed</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">right_motor_reversed</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">left_motor_sensor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">right_motor_sensor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">energy_sensor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">colour</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">,</span>
+                       <span class="n">light</span><span class="p">:</span> <span class="n">LightSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">action_energy_cost</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">metabolism_energy_cost</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">alive</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">maximum_energy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">initial_energy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">consumables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">init_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">perturb_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">pheromone_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">drop_interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                       <span class="n">p_bump_noise</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            __init__(self, x: float, y: float, controller: RobotController, sensors: List[LightSensor], sensor_angles: List[float], radius: float=1, theta: float=0, left_motor_max_speed: float=2, right_motor_max_speed: float=2, left_motor_inertia: float=0, right_motor_inertia: float=0, left_motor_noisemaker: NoiseSource=None, right_motor_noisemaker: NoiseSource=None, left_motor_reversed: bool=False, right_motor_reversed: bool=False, left_motor_sensor_noisemaker: NoiseSource=None, right_motor_sensor_noisemaker: NoiseSource=None, energy_sensor_noisemaker: NoiseSource=None, colour: str=&#39;darkblue&#39;, light: LightSource=None, action_energy_cost: float=0, metabolism_energy_cost: float=0, alive: bool=True, maximum_energy: float=0, initial_energy: float=1, consumables=None, init_fun: Callable=None, perturb_fun: Callable=None, pheromone_manager=None, drop_interval=0.5, p_bump_noise=0)</span>
+
+<span class="sd">            :param x: The :class:`Robot`&#39;s initial x-coordinate.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The :class:`Robot`&#39;s initial y-coordinate.</span>
+<span class="sd">            :type y: float</span>
+
+<span class="sd">            :param theta: The :class:`Robot`&#39;s initial orientation. Defaults to ``0``.</span>
+<span class="sd">            :type theta: float</span>
+
+<span class="sd">            :param radius: The radius of the :class:`Robot`&#39;s body. Defaults to ``1``.</span>
+<span class="sd">            :type radius: float</span>
+
+<span class="sd">            :param light: The :class:`LightSource` attached to the :class:`Robot`&#39;s body. Defaults to ``None``.</span>
+<span class="sd">            :type light: :class:`LightSource`</span>
+
+<span class="sd">            :param colour: The colour of the :class:`Robot`&#39;s body. Defaults to ``&quot;darkblue&quot;``.</span>
+<span class="sd">            :type colour: str</span>
+
+<span class="sd">            :param energy_sensor_noisemaker: A source of noise for the `Robot`&#39;s energy sensor. Defaults to ``None``.</span>
+<span class="sd">            :type energy_sensor_noisemaker: subclass of :class:`NoiseSource`</span>
+
+<span class="sd">            :param action_energy_cost: The energetic cost of action. Defaults to ``0``. The cost of action in a single simulation step, for each of the robot&#39;s 2 motors, is ``abs(motor speed) * dt * action_energy_cost``.</span>
+<span class="sd">            :type action_energy_cost: float</span>
+
+<span class="sd">            :param metabolism_energy_cost: The energetic cost of existing. The main reason for this cost is that without it, robots can survive for indefinite periods without moving/acting at all. When robots can &quot;die&quot; by not acting, there is a pressure (e.g. selective pressure, if evolving) to act, and potentially to also adapt. Defaults to ``0``.</span>
+<span class="sd">            :type metabolism_energy_cost: float</span>
+
+<span class="sd">            :param alive: If a robot runs our of energy, it will &quot;die&quot;, at which point its ``alive`` parameter will be set to ``False``, and the robot will cease to act (although in the current implementation, its controller will continue to function as normal). Defaults to ``True``.</span>
+<span class="sd">            :type alive: bool</span>
+
+<span class="sd">            :param maximum_energy: The maximum energy level the robot can have. Defaults to ``0``.</span>
+<span class="sd">            :type maximum_energy: float</span>
+
+<span class="sd">            :param initial_energy: The robot&#39;s initial energy level. Defaults to ``1``.</span>
+<span class="sd">            :type initial_energy: float</span>
+
+<span class="sd">            :param init_fun: A function which can be used to set the initial state of the system in each simulation run. Defaults to ``None``.</span>
+<span class="sd">            :type init_fun: function</span>
+
+<span class="sd">            :param perturb_fun: A function which can be used to perturb the robot&#39;s state. This will  typically be used at the beginning of simulation runs.  Defaults to ``None``.</span>
+<span class="sd">            :type perturb_fun: function</span>
+
+<span class="sd">            :param pheromone_manager: If a :class:`Robot` has a pheromone manager, then it will drop pheromones (similarly to an ant laying trails). Defaults to ``None``.</span>
+<span class="sd">            :type pheromone_manager: :class:`PheromoneManager`</span>
+
+<span class="sd">            :param drop_interval: The interval between which the robot will drop pheromones, if its ``pheromone_manager`` is not ``None``. Defaults to ``0.5``.</span>
+<span class="sd">            :type drop_interval: float</span>
+
+<span class="sd">            :param left_motor_max_speed: The maximum speed, in either direction, for the robot&#39;s left motor. Defaults to ``2``.</span>
+<span class="sd">            :type left_motor_max_speed: float</span>
+
+<span class="sd">            :param right_motor_max_speed: The maximum speed, in either direction, for the robot&#39;s right motor. Defaults to ``2``.</span>
+<span class="sd">            :type right_motor_max_speed: float</span>
+
+<span class="sd">            :param left_motor_inertia: The inertia (resistance to change of speed) of the robot&#39;s left motor. Defaults to ``0``.</span>
+<span class="sd">            :type left_motor_inertia: float</span>
+
+<span class="sd">            :param right_motor_inertia: The inertia (resistance to change of speed) of the robot&#39;s right motor. Defaults to ``0``.</span>
+<span class="sd">            :type right_motor_inertia: float</span>
+
+<span class="sd">            :param left_motor_noisemaker: A source of noise for the robot&#39;s left :class:`Motor`.</span>
+<span class="sd">            :type left_motor_noisemaker: :class:`NoiseSource`</span>
+
+<span class="sd">            :param right_motor_noisemaker: A source of noise for the robot&#39;s right :class:`Motor`.</span>
+<span class="sd">            :type right_motor_noisemaker: :class:`NoiseSource`</span>
+
+<span class="sd">            :param left_motor_reversed: A flag to determine whether the robot&#39;s left motor is running in the forwards (for ``False``) or reversed direction (for ``True``). Defaults to ``False``.</span>
+<span class="sd">            :type left_motor_reversed: bool</span>
+
+<span class="sd">            :param right_motor_reversed: A flag to determine whether the robot&#39;s right motor is running in the forwards (for ``False``) or reversed direction (for ``True``). Defaults to ``False``.</span>
+<span class="sd">            :type right_motor_reversed: bool</span>
+
+<span class="sd">            :param left_motor_sensor_noisemaker: A source of noise for the robot&#39;s left :class:`MotorSpeedSensor`.</span>
+<span class="sd">            :type left_motor_sensor_noisemaker: :class:`NoiseSource`</span>
+
+<span class="sd">            :param right_motor_sensor_noisemaker: A source of noise for the robot&#39;s right :class:`MotorSpeedSensor`.</span>
+<span class="sd">            :type right_motor_sensor_noisemaker: :class:`NoiseSource`</span>
+
+<span class="sd">            :param controller: The robot&#39;s controller.</span>
+<span class="sd">            :type controller: :class:`RobotController`</span>
+
+<span class="sd">            :param sensors: A :class:`Robot` has a list of 4 sensors by default: an internal energy sensor, a bump sensor, and a motor speed sensor for each of its 2 motors. The list of sensors passed in here will be joined to that list. The robot&#39;s energy sensor is at index ``0`` in the list, the bump sensor is at index ``1``, its left motor speed sensor is at index ``2``, and its right motor speed sensor is at index ``3``. Therefore, any other sensors will be at indices ``4`` and up.</span>
+<span class="sd">            :type sensors: list[:class:`Sensor`]</span>
+
+<span class="sd">            :param sensor_angles: A list of angles for the sensors passed in as the ``sensors`` parameter. This list should have exactly the same length as ``sensors``. For any sensor which has ``None`` as its corresponding entry in ``sensor_angles``, its position will be at the centre of the robot&#39;s body. For any sensor which has an angle specified, the sensor will lie on the circumference of the robot&#39;s body, at the specified angle from its forward direction.</span>
+<span class="sd">            :type sensor_angles: list[float]</span>
+
+<span class="sd">            :param consumables: The list of consumables which this agent can consume.</span>
+<span class="sd">            :type consumables: list(:class:`Consumable`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">colour</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">light</span><span class="p">,</span> <span class="n">energy_sensor_noisemaker</span><span class="p">,</span> <span class="n">action_energy_cost</span><span class="p">,</span> <span class="n">metabolism_energy_cost</span><span class="p">,</span> <span class="n">alive</span><span class="p">,</span> <span class="n">maximum_energy</span><span class="p">,</span> <span class="n">initial_energy</span><span class="p">,</span> <span class="n">init_fun</span><span class="o">=</span><span class="n">init_fun</span><span class="p">,</span> <span class="n">perturb_fun</span><span class="o">=</span><span class="n">perturb_fun</span><span class="p">,</span> <span class="n">pheromone_manager</span><span class="o">=</span><span class="n">pheromone_manager</span><span class="p">,</span> <span class="n">drop_interval</span><span class="o">=</span><span class="n">drop_interval</span><span class="p">,</span> <span class="n">p_bump_noise</span><span class="o">=</span><span class="n">p_bump_noise</span><span class="p">)</span>  <span class="c1"># call Agent constructor</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">:</span> <span class="n">Controller</span> <span class="o">=</span> <span class="n">controller</span>  <span class="c1"># the controller for the robot, which will set motor speeds according to how stimulated the robot&#39;s sensors are</span>
+
+        <span class="c1"># self.sensors: List[LightSensor] = sensors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">sensor_angles</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="p">:</span> <span class="n">Motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">max_speed</span><span class="o">=</span><span class="n">left_motor_max_speed</span><span class="p">,</span> <span class="n">motor_inertia_coeff</span><span class="o">=</span><span class="n">left_motor_inertia</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="n">left_motor_reversed</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">left_motor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Left motor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="p">:</span> <span class="n">Motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">max_speed</span><span class="o">=</span><span class="n">right_motor_max_speed</span><span class="p">,</span> <span class="n">motor_inertia_coeff</span><span class="o">=</span><span class="n">right_motor_inertia</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="n">right_motor_reversed</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">right_motor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span> <span class="o">=</span><span class="s2">&quot;Right motor&quot;</span><span class="p">)</span>
+
+        <span class="n">left_motor_sensor</span> <span class="o">=</span> <span class="n">MotorSpeedSensor</span><span class="p">(</span><span class="n">motor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">left_motor_sensor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Left motor sensor&quot;</span><span class="p">)</span>
+        <span class="n">right_motor_sensor</span> <span class="o">=</span> <span class="n">MotorSpeedSensor</span><span class="p">(</span><span class="n">motor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">right_motor_sensor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Right motor sensor&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span> <span class="o">+=</span> <span class="p">[</span><span class="n">left_motor_sensor</span><span class="p">,</span> <span class="n">right_motor_sensor</span><span class="p">]</span> <span class="o">+</span> <span class="n">sensors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span> <span class="o">=</span> <span class="n">consumables</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensors</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensor_angles</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_children_positions</span><span class="p">()</span>  <span class="c1"># update sensor positions according to robot&#39;s state</span></div>
+
+
+<div class="viewcode-block" id="Robot.step_sensors">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.step_sensors">[docs]</a>
+    <span class="k">def</span> <span class="nf">step_sensors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            A method which steps the sensors in the robot&#39;s `sensors` list, and returns the sensor activations in a list.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the robot&#39;s sensors over.</span>
+<span class="sd">            :type dt: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">activations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+            <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">activations</span></div>
+
+
+<div class="viewcode-block" id="Robot.control">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.control">[docs]</a>
+    <span class="k">def</span> <span class="nf">control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            A method which gets motor speed commands by calling the step method of the robot&#39;s controller.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the robot&#39;s controller over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param activations: The sensory inputs to the robot&#39;s controller. A list of the activation levels for each of the robot&#39;s sensors.</span>
+<span class="sd">            :type activations: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get motor speeds from controller</span>
+        <span class="n">left_speed</span><span class="p">,</span> <span class="n">right_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">activations</span><span class="p">)</span>
+
+        <span class="c1"># return speeds to step method</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">left_speed</span><span class="p">,</span> <span class="n">right_speed</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Robot.step_actuators">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.step_actuators">[docs]</a>
+    <span class="k">def</span> <span class="nf">step_actuators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_commands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Update the robot&#39;s motor speeds, based on the commands from the robot&#39;s controller and its motors&#39; dynamics (i.e. current speeds and inertias).</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the robot&#39;s motors over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param speed_commands: The motor speed commands which are generated by the robot&#39;s controller.</span>
+<span class="sd">            :type speed_commands: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">speed_commands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+        <span class="n">right_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">speed_commands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">left_speed</span><span class="p">,</span> <span class="n">right_speed</span><span class="p">]</span></div>
+
+
+    <span class="c1"># this is separated from the step method in case we want to override it</span>
+    <span class="c1"># - one example of why we might want to do this is if we wanted to add collisions</span>
+    <span class="c1">#   to the simulation. to achieve this, we could do something like create a subclass of</span>
+    <span class="c1">#   Robot, with its own integrate method, which calls this one and then superimposes</span>
+    <span class="c1">#   an additional movement due to collisions</span>
+<div class="viewcode-block" id="Robot.integrate">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.integrate">[docs]</a>
+    <span class="k">def</span> <span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speeds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Integrate the robot&#39;s motion based on its motor speeds.</span>
+
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            Applies a motor activation vector to a robot state, and simulates the consequences using Euler integration over a dt interval.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the robot&#39;s motion over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param speeds: The robot&#39;s motor speeds.</span>
+<span class="sd">            :type speeds: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># calculate the linear speed and angular speed</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">speeds</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="p">(</span><span class="n">speeds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">])</span>
+
+        <span class="c1"># calculate time derivative of state</span>
+        <span class="n">deriv</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">v</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">omega</span><span class="p">]</span>
+
+        <span class="c1"># perform Euler integration</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">deriv</span><span class="p">)</span> <span class="o">+</span> <span class="n">state</span>
+
+        <span class="c1"># store robot state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Robot.update_energy">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.update_energy">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual_speeds</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Update the robot&#39;s energy level, based on its metabolic and action costs.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the robot&#39;s energy losses over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param actual_speeds: The robot&#39;s current motor speeds.</span>
+<span class="sd">            :type actual_speeds: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># energy losses - allows robot to die here *before* it can consume anything</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">:</span>
+            <span class="c1"># update energy. the faster the robot&#39;s wheels turn, the quicker it loses energy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_energy_cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_speeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_energy_cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">metabolism_energy_cost</span>  <span class="c1"># some energy is lost even if the robot does not move</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># prevent energy falling below zero</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># energy consumption - can include gains and losses (&quot;negative energy&quot;)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">consumable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">consumable</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">consumable</span><span class="o">.</span><span class="n">y</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">consumable</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">+=</span> <span class="n">consumable</span><span class="o">.</span><span class="n">consume</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># prevent energy falling below zero</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum_energy</span><span class="p">)</span> <span class="c1"># prevent energy going over &quot;full&quot;</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+    <span class="c1"># update positions and orientations of all sensors</span>
+<div class="viewcode-block" id="Robot.update_children_positions">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.update_children_positions">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_children_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This method is used to update the positions and orientations of a robot&#39;s attached subsystems, such as its sensors, as the robot moves.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># update light positions</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span>
+
+        <span class="c1"># update sensor positions</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thetas</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Robot.get_data">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.get_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A function to get the data from an :class:`Robot`, in the form of a string-keyed dict.</span>
+
+<span class="sd">            These data, as and when they are included in the returned dict, can be accessed with the following keys:</span>
+
+<span class="sd">            * data inherited from :class:`Agent`: see :class:`Agent`</span>
+<span class="sd">            * class name (Robot): ``data[&quot;classname&quot;]``</span>
+<span class="sd">            * data from the robot&#39;s controller: ``data[&quot;controller&quot;]``</span>
+<span class="sd">            * data from the robot&#39;s sensors: ``data[&quot;sensors&quot;]``</span>
+<span class="sd">            * data from the robot&#39;s motors: ``data[&quot;motors&quot;]``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;classname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Robot&quot;</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+
+        <span class="c1"># keep these lines temporarily, so as not to break plotting code</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;left_motor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;right_motor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+        <span class="c1"># this will replace the lines above</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;motors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">()]</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;controller&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="Robot.reset">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_controller</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This method resets a robot&#39;s state and simulation data to their initial values, so that it can be used again.</span>
+
+<span class="sd">            :param reset_controller: determines whether or not the robot&#39;s controller is also reset, defaults to ``True``. This is because sometimes you might want to reset a robot and simulate it again taking advantage of any information or learning which the controller has acquired.</span>
+<span class="sd">            :type reset_controller: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="c1"># this assumes that no sensors have been added or removed</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">):</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_children_positions</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">reset_controller</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Overrides the == operator for instances of this class.</span>
+
+<span class="sd">            :param other: The instance of :class:`Robot` that this instance will be compared to.</span>
+<span class="sd">            :type other: System</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">sensor_angles</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_motor</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">left_motor</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_motor</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">right_motor</span>
+
+        <span class="k">return</span> <span class="n">is_eq</span>
+
+    <span class="c1"># draw robot in the specified matplotlib axes</span>
+<div class="viewcode-block" id="Robot.draw">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Draw robot in specified Matplotlib axes.</span>
+
+<span class="sd">            :param ax: The Matplotlib axes to draw the robot on.</span>
+<span class="sd">            :type ax: Matplotlib axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)],</span>
+                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span><span class="p">))</span>
+        <span class="n">wheels</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="mf">0.9</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)]</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="n">mtransforms</span><span class="o">.</span><span class="n">Affine2D</span><span class="p">()</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">ax</span><span class="o">.</span><span class="n">transData</span>
+        <span class="k">for</span> <span class="n">wheel</span> <span class="ow">in</span> <span class="n">wheels</span><span class="p">:</span>
+            <span class="n">wheel</span><span class="o">.</span><span class="n">set_transform</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">wheel</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="mi">3</span><span class="p">:]:</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+            <span class="c1"># self.__draw_FOV(sensor, ax)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__wheel_ends</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generate coordinates used for drawing robot&#39;s wheels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.95</span>
+
+        <span class="n">left_mid_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">left_mid_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">right_mid_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">right_mid_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">half_wheel_len</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+
+        <span class="n">left_end_x</span> <span class="o">=</span> <span class="n">left_mid_x</span> <span class="o">+</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">left_end_y</span> <span class="o">=</span> <span class="n">left_mid_y</span> <span class="o">+</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="n">right_end_x</span> <span class="o">=</span> <span class="n">right_mid_x</span> <span class="o">+</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">right_end_y</span> <span class="o">=</span> <span class="n">right_mid_y</span> <span class="o">+</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="n">left_end_x2</span> <span class="o">=</span> <span class="n">left_mid_x</span> <span class="o">-</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">left_end_y2</span> <span class="o">=</span> <span class="n">left_mid_y</span> <span class="o">-</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="n">right_end_x2</span> <span class="o">=</span> <span class="n">right_mid_x</span> <span class="o">-</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">right_end_y2</span> <span class="o">=</span> <span class="n">right_mid_y</span> <span class="o">-</span> <span class="n">half_wheel_len</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left_end_x</span><span class="p">,</span> <span class="n">left_end_y</span><span class="p">,</span> <span class="n">right_end_x</span><span class="p">,</span> <span class="n">right_end_y</span><span class="p">,</span> <span class="n">left_end_x2</span><span class="p">,</span> <span class="n">left_end_y2</span><span class="p">,</span> <span class="n">right_end_x2</span><span class="p">,</span> <span class="n">right_end_y2</span>
+
+    <span class="c1"># draw robot in a pygame display</span>
+<div class="viewcode-block" id="Robot.pygame_draw">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.Robot.pygame_draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">pygame_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shifty</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Draw robot on PyGame display.</span>
+
+<span class="sd">            :param screen: The PyGame display to draw on.</span>
+<span class="sd">            :type screen: PyGame display</span>
+
+<span class="sd">            :param scale: The scale to draw at.</span>
+<span class="sd">            :type scale: float</span>
+
+<span class="sd">            :param shiftx: The offset from centre in the x-axis for drawing.</span>
+<span class="sd">            :type shiftx: float</span>
+
+<span class="sd">            :param shifty: The offset from centre in the y-axis for drawing.</span>
+<span class="sd">            :type shifty: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pygame_draw_wheels</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span>
+
+        <span class="n">pygame_drawcircle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colour</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="mi">3</span><span class="p">:]:</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">pygame_draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span>
+
+        <span class="n">end_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">end_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">pygame_drawline</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">pygame_draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__pygame_draw_wheels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shifty</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Draw the robot&#39;s wheels on a PyGame display.</span>
+
+<span class="sd">            :param screen: The PyGame display to draw on.</span>
+<span class="sd">            :type screen: PyGame display</span>
+
+<span class="sd">            :param scale: The scale to draw at.</span>
+<span class="sd">            :type scale: float</span>
+
+<span class="sd">            :param shiftx: The offset from centre in the x-axis for drawing.</span>
+<span class="sd">            :type shiftx: float</span>
+
+<span class="sd">            :param shifty: The offset from centre in the y-axis for drawing.</span>
+<span class="sd">            :type shifty: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left_end_x</span><span class="p">,</span> <span class="n">left_end_y</span><span class="p">,</span> <span class="n">right_end_x</span><span class="p">,</span> <span class="n">right_end_y</span><span class="p">,</span> <span class="n">left_end_x2</span><span class="p">,</span> <span class="n">left_end_y2</span><span class="p">,</span> <span class="n">right_end_x2</span><span class="p">,</span> <span class="n">right_end_y2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wheel_ends</span><span class="p">()</span>
+
+        <span class="n">pygame_drawline</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">left_end_x</span><span class="p">,</span> <span class="n">left_end_y</span><span class="p">,</span> <span class="n">left_end_x2</span><span class="p">,</span> <span class="n">left_end_y2</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+        <span class="n">pygame_drawline</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">right_end_x</span><span class="p">,</span> <span class="n">right_end_y</span><span class="p">,</span> <span class="n">right_end_x2</span><span class="p">,</span> <span class="n">right_end_y2</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chris Johnson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

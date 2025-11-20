@@ -1,0 +1,18 @@
+# controller parameters
+b_l: 0
+b_r: 0
+w_ll: 0
+w_rl: 0
+w_lr: 0
+w_rr: 0
+# left motor noise parameters
+white: 0
+brown: 0
+spike: 0
+# simulation parameters
+n_runs: 1
+duration: 200
+screen_width: 800
+animate: 1
+animation_frame_delay: 10
+plot_data: 1
