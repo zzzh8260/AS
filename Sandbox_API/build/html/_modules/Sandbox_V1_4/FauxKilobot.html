@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandbox_V1_4.FauxKilobot &mdash; Sandbox 1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=0ed52906"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sandbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">General information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../systems.html">Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stimuli_sensors.html">Sources of stimuli and sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuators.html">Actuators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../controllers.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../environment.html">Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../noise_sources.html">Sources of noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../disturbance_sources.html">Disturbances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../simulation.html">Simulation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sandbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Sandbox_V1_4.FauxKilobot</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Sandbox_V1_4.FauxKilobot</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.Agent</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.FauxKilobotController</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Motor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.noise</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.pygame_functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Radio</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.CompassSensor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.HeadingSensor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.MotorSpeedSensor</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="FauxKilobot">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot">[docs]</a>
+<span class="k">class</span> <span class="nc">FauxKilobot</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to simulate a robot which is loosely inspired by Kilobot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FauxKilobot.__init__">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                       <span class="n">controller</span><span class="p">:</span> <span class="n">FauxKilobotController</span><span class="p">,</span>
+                       <span class="n">sensors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sensor</span><span class="p">],</span>
+                       <span class="n">sensor_angles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                       <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">move_motor_max_speed</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                       <span class="n">colour</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;#A020F0&#39;</span><span class="p">,</span>
+                       <span class="n">light</span><span class="p">:</span> <span class="n">LightSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">energy_sensor_noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">action_energy_cost</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">metabolism_energy_cost</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">alive</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">maximum_energy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">initial_energy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">consumables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">init_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">perturb_fun</span><span class="p">:</span> <span class="n">Callable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">pheromone_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">drop_interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                       <span class="n">radio_t_range</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                       <span class="n">radio_r_range</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                       <span class="n">radio_enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">move_motor_sensor_noisemaker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">turn_motor_sensor_noisemaker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">move_motor_noisemaker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">turn_motor_noisemaker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+					   <span class="n">p_bump_noise</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            __init__(self, x: float, y: float, theta: float, controller: FauxKilobotController, sensors: List[Sensor], sensor_angles: List[float], radius: float=1, move_motor_max_speed: float=2, colour: str=&#39;#A020F0&#39;, light: LightSource=None, energy_sensor_noisemaker: NoiseSource=None, action_energy_cost: float=0, metabolism_energy_cost: float=0, alive: bool=True, maximum_energy: float=0, initial_energy: float=1, consumables=None, init_fun: Callable=None, perturb_fun: Callable=None, pheromone_manager=None, drop_interval=0.5, radio_t_range=3, radio_r_range=3, radio_enabled=True, move_motor_sensor_noisemaker=None, turn_motor_sensor_noisemaker=None, move_motor_noisemaker=None, turn_motor_noisemaker=None,</span>
+<span class="sd">            p_bump_noise=0)</span>
+
+<span class="sd">            :param x: The :class:`FauxKilobot`&#39;s initial x-coordinate.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The :class:`FauxKilobot`&#39;s initial y-coordinate.</span>
+<span class="sd">            :type y: float</span>
+
+<span class="sd">            :param theta: The :class:`FauxKilobot`&#39;s initial orientation. Defaults to ``0``.</span>
+<span class="sd">            :type theta: float</span>
+
+<span class="sd">            :param radius: The radius of the :class:`FauxKilobot`&#39;s body. Defaults to ``1``.</span>
+<span class="sd">            :type radius: float</span>
+
+<span class="sd">            :param colour: The colour of the :class:`FauxKilobot`&#39;s body. Defaults to ``&#39;#A020F0&#39;``.</span>
+<span class="sd">            :type colour: str</span>
+
+<span class="sd">            :param light: The :class:`LightSource` attached to the :class:`FauxKilobot`&#39;s body. Defaults to ``None``.</span>
+<span class="sd">            :type light: :class:`LightSource`</span>
+
+<span class="sd">            :param controller: the FauxKilobot&#39;s controller.</span>
+<span class="sd">            :type controller: :class:`FauxKilobotController`</span>
+
+<span class="sd">            :param sensors: A :class:`FauxKilobot` has a list of 6 sensors by default: an internal energy sensor, a bump sensor, compass and heading sensors, and a motor speed sensor for each of its 2 motors. The list of sensors passed in here will be joined to that list. The FauxKilobot&#39;s :class:`EnergySensor` is at index ``0`` in the list, its :class:`BumpSensor` is at index ``1`` in the list, its :class:`CompassSensor` is at index ``2``, and its :class:`HeadingSensor` is at index ``3``. Its :class:`MotorSpeedSensor` for its translational speed is at index ``4``, and its :class:`MotorSpeedSensor` for its angular speed (to change its body orientation) is at index ``5``. Therefore, any other sensors will be at indices ``6`` and up.</span>
+<span class="sd">            :type sensors: list[:class:`Sensor`]</span>
+
+<span class="sd">            :param sensor_angles: A list of angles for the sensors passed in as the ``sensors`` parameter. This list should have exactly the same length as ``sensors``. For any sensor which has ``None`` as its corresponding entry in ``sensor_angles``, its position will be at the centre of the FauxKilobot&#39;s body. For any sensor which has an angle specified, the sensor will lie on the circumference of the FauxKilobot&#39;s body, at the specified angle from its forward direction.</span>
+<span class="sd">            :type sensor_angles: list[float]</span>
+
+<span class="sd">            :param energy_sensor_noisemaker: A source of noise for the FauxKilobot&#39;s energy sensor. Defaults to ``None``.</span>
+<span class="sd">            :type energy_sensor_noisemaker: subclass of :class:`NoiseSource`</span>
+
+<span class="sd">            :param action_energy_cost: The energetic cost of action. Defaults to ``0``. The cost of action in a single simulation step, for each of the FauxKilobot&#39;s 2 motors, is ``abs(motor speed) * dt * action_energy_cost``.</span>
+<span class="sd">            :type action_energy_cost: float</span>
+
+<span class="sd">            :param metabolism_energy_cost: The energetic cost of existing. The main reason for this cost is that without it, FauxKilobots can survive for indefinite periods without moving/acting at all. When FauxKilobots can &quot;die&quot; by not acting, there is a pressure (e.g. selective pressure, if evolving) to act, and potentially to also adapt. Defaults to ``0``.</span>
+<span class="sd">            :type metabolism_energy_cost: float</span>
+
+<span class="sd">            :param alive: If a FauxKilobot runs our of energy, it will &quot;die&quot;, at which point its ``alive`` parameter will be set to ``False``, and the FauxKilobot will cease to act (although in the current implementation, its controller will continue to function as normal). Defaults to ``True``.</span>
+<span class="sd">            :type alive: bool</span>
+
+<span class="sd">            :param maximum_energy: The maximum energy level the FauxKilobot can have. Defaults to ``0``.</span>
+<span class="sd">            :type maximum_energy: float</span>
+
+<span class="sd">            :param initial_energy: The FauxKilobot&#39;s initial energy level. Defaults to ``1``.</span>
+<span class="sd">            :type initial_energy: float</span>
+
+<span class="sd">            :param init_fun: A function which can be used to set the initial state of the system in each simulation run. Defaults to ``None``.</span>
+<span class="sd">            :type init_fun: function</span>
+
+<span class="sd">            :param perturb_fun: A function which can be used to perturb the FauxKilobot&#39;s state. This will  typically be used at the beginning of simulation runs.  Defaults to ``None``.</span>
+<span class="sd">            :type perturb_fun: function</span>
+
+<span class="sd">            :param pheromone_manager: If a :class:`FauxKilobot` has a pheromone manager, then it will drop pheromones (similarly to an FauxKilobot laying trails). Defaults to ``None``.</span>
+<span class="sd">            :type pheromone_manager: :class:`PheromoneManager`</span>
+
+<span class="sd">            :param drop_interval: The interval between which the FauxKilobot will drop pheromones, if its ``pheromone_manager`` is not ``None``. Defaults to ``0.5``.</span>
+<span class="sd">            :type drop_interval: float</span>
+
+<span class="sd">            :param consumables: The list of consumables which this agent can consume.</span>
+<span class="sd">            :type consumables: list(:class:`Consumable`)</span>
+
+<span class="sd">            :param turn_motor_noisemaker: The noise source for the FauxKilobot&#39;s turn motor. Defaults to ``None``.</span>
+<span class="sd">            :type turn_motor_noisemaker: NoiseSource</span>
+
+<span class="sd">            :param turn_motor_sensor_noisemaker: The noise source for the FauxKilobot&#39;s turn motor sensor. Defaults to ``None``.</span>
+<span class="sd">            :type turn_motor_sensor_noisemaker: NoiseSource</span>
+
+<span class="sd">            :param move_motor_noisemaker: The noise source for the FauxKilobot&#39;s move motor. Defaults to ``None``.</span>
+<span class="sd">            :type move_motor_noisemaker: NoiseSource</span>
+
+<span class="sd">            :param move_motor_sensor_noisemaker: The noise source for the FauxKilobot&#39;s move motor sensor. Defaults to ``None``.</span>
+<span class="sd">            :type move_motor_sensor: NoiseSource</span>
+
+<span class="sd">            :param move_motor_max_speed: The maximum speed that the FauxKilobot can move at in the x-y plane. Defaults to ``2``</span>
+<span class="sd">            :type move_motor_max_speed: float</span>
+
+<span class="sd">            :param radio_t_range: FauxKilobot&#39;s :class:`Radio` transmitter range. Defaults to ``3``.</span>
+<span class="sd">            :type radio_t_range: float</span>
+
+<span class="sd">            :param radio_r_range: FauxKilobot&#39;s :class:`Radio` receiver range. Defaults to ``3``.</span>
+<span class="sd">            :type radio_r_range: float</span>
+
+<span class="sd">            :param radio_enabled: A flag to set whether the FauxKilobot&#39;s :class:`Radio` is enabled. Defaults to ``True``.</span>
+<span class="sd">            :type radio_enabled: bool</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">colour</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">light</span><span class="p">,</span> <span class="n">energy_sensor_noisemaker</span><span class="p">,</span> <span class="n">action_energy_cost</span><span class="p">,</span> <span class="n">metabolism_energy_cost</span><span class="p">,</span> <span class="n">alive</span><span class="p">,</span> <span class="n">maximum_energy</span><span class="p">,</span> <span class="n">initial_energy</span><span class="p">,</span> <span class="n">init_fun</span><span class="o">=</span><span class="n">init_fun</span><span class="p">,</span> <span class="n">perturb_fun</span><span class="o">=</span><span class="n">perturb_fun</span><span class="p">,</span> <span class="n">pheromone_manager</span><span class="o">=</span><span class="n">pheromone_manager</span><span class="p">,</span> <span class="n">drop_interval</span><span class="o">=</span><span class="n">drop_interval</span><span class="p">,</span> <span class="n">p_bump_noise</span><span class="o">=</span><span class="n">p_bump_noise</span><span class="p">)</span>  <span class="c1"># call Agent constructor</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">:</span> <span class="n">FauxKilobotController</span> <span class="o">=</span> <span class="n">controller</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CompassSensor</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">theta</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HeadingSensor</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">sensor_angles</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span><span class="p">:</span> <span class="n">Motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">max_speed</span><span class="o">=</span><span class="n">move_motor_max_speed</span><span class="p">,</span> <span class="n">motor_inertia_coeff</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">move_motor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Speed motor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span><span class="p">:</span> <span class="n">Motor</span> <span class="o">=</span> <span class="n">Motor</span><span class="p">(</span><span class="n">max_speed</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">motor_inertia_coeff</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">turn_motor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Orientation &amp; Heading motor&quot;</span><span class="p">)</span>
+
+        <span class="n">move_motor_sensor</span> <span class="o">=</span> <span class="n">MotorSpeedSensor</span><span class="p">(</span><span class="n">motor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">move_motor_sensor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Move motor sensor&quot;</span><span class="p">)</span>
+        <span class="n">turn_motor_sensor</span> <span class="o">=</span> <span class="n">MotorSpeedSensor</span><span class="p">(</span><span class="n">motor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">turn_motor_sensor_noisemaker</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="s2">&quot;Turn motor sensor&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span> <span class="o">+=</span> <span class="p">[</span><span class="n">move_motor_sensor</span><span class="p">,</span> <span class="n">turn_motor_sensor</span><span class="p">]</span> <span class="o">+</span> <span class="n">sensors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span> <span class="o">=</span> <span class="n">consumables</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">heading</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">heading</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">radio</span> <span class="o">=</span> <span class="n">Radio</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">transmitter_range</span><span class="o">=</span><span class="n">radio_t_range</span><span class="p">,</span> <span class="n">receiver_range</span><span class="o">=</span><span class="n">radio_r_range</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">radio_enabled</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensors</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensor_angles</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_children_positions</span><span class="p">()</span>  <span class="c1"># update sensor positions according to FauxKilobot&#39;s state</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.step_sensors">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.step_sensors">[docs]</a>
+    <span class="k">def</span> <span class="nf">step_sensors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            A method which steps the sensors in the FauxKilobot&#39;s `sensors` list, and returns the sensor activations in a list.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the FauxKilobot&#39;s sensors over.</span>
+<span class="sd">            :type dt: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">activations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+            <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">activations</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.control">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.control">[docs]</a>
+    <span class="k">def</span> <span class="nf">control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            A method which gets motor speed commands by calling the step method of the FauxKilobot&#39;s controller.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the FauxKilobot&#39;s controller over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param activations: The sensory inputs to the FauxKilobot&#39;s controller. A list of the activation levels for each of the FauxKilobot&#39;s sensors.</span>
+<span class="sd">            :type activations: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">activations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radio</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.step_actuators">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.step_actuators">[docs]</a>
+    <span class="k">def</span> <span class="nf">step_actuators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed_commands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Update the FauxKilobot&#39;s motor speeds, based on the commands from the FauxKilobot&#39;s controller and its motors&#39; dynamics (i.e. current speeds and inertias).</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the FauxKilobot&#39;s motors over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param speed_commands: The motor speed commands which are generated by the FauxKilobot&#39;s controller.</span>
+<span class="sd">            :type speed_commands: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">move_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">speed_commands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+        <span class="n">turn_speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">speed_commands</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">move_speed</span><span class="p">,</span> <span class="n">turn_speed</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.integrate">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.integrate">[docs]</a>
+    <span class="k">def</span> <span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speeds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Integrate the FauxKilobot&#39;s motion based on its motor speeds.</span>
+
+<span class="sd">            Only called from step().</span>
+
+<span class="sd">            Applies a motor activation vector to a FauxKilobot state, and simulates the consequences using Euler integration over a dt interval.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the FauxKilobot&#39;s motion over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param speeds: The FauxKilobot&#39;s motor speeds.</span>
+<span class="sd">            :type speeds: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heading</span> <span class="o">+=</span> <span class="n">speeds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dt</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heading</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heading</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.update_energy">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.update_energy">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual_speeds</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Update the FauxKilobot&#39;s energy level, based on its metabolic and action costs.</span>
+
+<span class="sd">            :param dt: Interval of time to integrate the FauxKilobot&#39;s energy losses over.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :param actual_speeds: The FauxKilobot&#39;s current motor speeds.</span>
+<span class="sd">            :type actual_speeds: list[float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># energy losses - allows FauxKilobot to die here *before* it can consume anything</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">:</span>
+            <span class="c1"># update energy. the faster the robot&#39;s motors turn, the quicker it loses energy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_speeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_energy_cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">actual_speeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_energy_cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-=</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">metabolism_energy_cost</span>  <span class="c1"># some energy is lost even if the robot does not move</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># prevent energy falling below zero</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># energy consumption - can include gains and losses (&quot;negative energy&quot;)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">consumable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">consumables</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">consumable</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">consumable</span><span class="o">.</span><span class="n">y</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">consumable</span><span class="o">.</span><span class="n">radius</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">+=</span> <span class="n">consumable</span><span class="o">.</span><span class="n">consume</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># prevent energy falling below zero</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum_energy</span><span class="p">)</span> <span class="c1"># prevent energy going over &quot;full&quot;</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+    <span class="c1"># update positions and orientations of all sensors</span>
+<div class="viewcode-block" id="FauxKilobot.update_children_positions">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.update_children_positions">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_children_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This method is used to update the positions and orientations of a FauxKilobot&#39;s attached subsystems, such as its sensors, as the FauxKilobot moves.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radio</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radio</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="c1"># update light positions</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="c1"># update sensor positions</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">sensor</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thetas</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.get_data">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.get_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A function to get the data from a :class:`FauxKilobot`, in the form of a string-keyed dict.</span>
+
+<span class="sd">            These data, as and when they are included in the returned dict, can be accessed with the following keys:</span>
+
+<span class="sd">            * data inherited from :class:`Agent`: see :class:`Agent`</span>
+<span class="sd">            * class name (FauxKilobot): ``data[&quot;classname&quot;]``</span>
+<span class="sd">            * data from the FauxKilobot&#39;s controller: ``data[&quot;controller&quot;]``</span>
+<span class="sd">            * data from the FauxKilobot&#39;s sensors: ``data[&quot;sensors&quot;]``</span>
+<span class="sd">            * data from the FauxKilobot&#39;s motors: ``data[&quot;motors&quot;]``</span>
+<span class="sd">            * a complete history of the FauxKilobot&#39;s heading: ``data[&quot;headings&quot;]``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;classname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;FauxKilobot&quot;</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;headings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headings</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;motors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span><span class="o">.</span><span class="n">get_data</span><span class="p">()]</span>
+
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;controller&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="FauxKilobot.reset">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_controller</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This method resets a FauxKilobot&#39;s state and simulation data to their initial values, so that it can be used again.</span>
+
+<span class="sd">            :param reset_controller: determines whether or not the FauxKilobot&#39;s controller is also reset, defaults to ``True``. This is because sometimes you might want to reset a FauxKilobot and simulate it again taking advantage of any information or learning which the controller has acquired.</span>
+<span class="sd">            :type reset_controller: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="c1"># this assumes that no sensors have been added or removed</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">):</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_sensor_angles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_children_positions</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">heading</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">heading</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">reset_controller</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">radio</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Overrides the == operator for instances of this class.</span>
+
+<span class="sd">            :param other: The instance of FauxKilobot that this instance will be compared to.</span>
+<span class="sd">            :type other: System</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_angles</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">sensor_angles</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">turn_motor</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">turn_motor</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_motor</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">move_motor</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">heading</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">heading</span>
+        <span class="n">is_eq</span> <span class="o">=</span> <span class="n">is_eq</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">headings</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">headings</span>
+
+        <span class="k">return</span> <span class="n">is_eq</span>
+
+<div class="viewcode-block" id="FauxKilobot.pygame_draw">
+<a class="viewcode-back" href="../../agents.html#Sandbox_V1_4.FauxKilobot.pygame_draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">pygame_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">shifty</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Draw FauxKilobot on PyGame display.</span>
+
+<span class="sd">            :param screen: The PyGame display to draw on.</span>
+<span class="sd">            :type screen: PyGame display</span>
+
+<span class="sd">            :param scale: The scale to draw at.</span>
+<span class="sd">            :type scale: float</span>
+
+<span class="sd">            :param shiftx: The offset from centre in the x-axis for drawing.</span>
+<span class="sd">            :type shiftx: float</span>
+
+<span class="sd">            :param shifty: The offset from centre in the y-axis for drawing.</span>
+<span class="sd">            :type shifty: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="n">shiftx</span><span class="p">,</span> <span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="n">shifty</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colour</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="p">:</span>
+            <span class="n">sensor</span><span class="o">.</span><span class="n">pygame_draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span>
+
+        <span class="n">end_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">end_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                         <span class="n">start_pos</span><span class="o">=</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">scale</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">shifty</span><span class="p">),</span>
+                         <span class="n">end_pos</span><span class="o">=</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="n">end_x</span> <span class="o">+</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">end_y</span> <span class="o">+</span> <span class="n">shifty</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="o">.</span><span class="n">pygame_draw</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shiftx</span><span class="p">,</span> <span class="n">shifty</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chris Johnson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

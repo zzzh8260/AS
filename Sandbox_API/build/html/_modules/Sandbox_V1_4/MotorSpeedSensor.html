@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sandbox_V1_4.MotorSpeedSensor &mdash; Sandbox 1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=0ed52906"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Sandbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">General information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../systems.html">Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stimuli_sensors.html">Sources of stimuli and sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../agents.html">Agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../actuators.html">Actuators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../controllers.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../environment.html">Environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../noise_sources.html">Sources of noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../disturbance_sources.html">Disturbances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../simulation.html">Simulation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Sandbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Sandbox_V1_4.MotorSpeedSensor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Sandbox_V1_4.MotorSpeedSensor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Motor</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.noise</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Sensor</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<div class="viewcode-block" id="MotorSpeedSensor">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.MotorSpeedSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">MotorSpeedSensor</span><span class="p">(</span><span class="n">Sensor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to implement a motor speed (technically, velocity, as it has direction) sensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MotorSpeedSensor.__init__">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.MotorSpeedSensor.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor</span><span class="p">:</span> <span class="n">Motor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noisemaker</span><span class="p">:</span> <span class="n">NoiseSource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_str</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;MotorSensor&#39;</span><span class="p">,</span> <span class="n">delay_steps</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            __init__(self, motor: Motor, x: float=None, y: float=None, noisemaker: NoiseSource=None, name_str: str=&#39;MotorSensor&#39;, delay_steps: int=0)</span>
+
+<span class="sd">            :param x: The initial x-coordinate of the :class:`MotorSpeedSensor`, defaults to ``None``.</span>
+<span class="sd">            :type x: float</span>
+
+<span class="sd">            :param y: The initial y-coordinate of the :class:`MotorSpeedSensor`, defaults to ``None``.</span>
+<span class="sd">            :type y: float</span>
+
+<span class="sd">            :param motor: The motor that the sensor is attached to.</span>
+<span class="sd">            :type motor: :class:`Motor`</span>
+
+<span class="sd">            :param noisemaker: The sensor&#39;s source of noise.</span>
+<span class="sd">            :type noisemaker: :class:`NoiseSource`</span>
+
+<span class="sd">            :param name_str: The name of the sensor, used in plotting simulation data.</span>
+<span class="sd">            :type name_str: str</span>
+
+<span class="sd">            :param delay_steps: The number of simulation steps a sensor signal will be delayed for.</span>
+<span class="sd">            :type delay_steps: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name_str</span><span class="o">=</span><span class="n">name_str</span><span class="p">,</span> <span class="n">noisemaker</span><span class="o">=</span><span class="n">noisemaker</span><span class="p">,</span> <span class="n">delay_steps</span><span class="o">=</span><span class="n">delay_steps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">motor</span> <span class="o">=</span> <span class="n">motor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noisemaker</span> <span class="o">=</span> <span class="n">noisemaker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activations</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MotorSpeedSensor.step">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.MotorSpeedSensor.step">[docs]</a>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to step an energy sensor forwards in time. A :class:`MotorSpeedSensor` has no dynamics, apart from a potential delay from a :class:`DelayBlock`, so technically is not integrated, but ``dt`` is passed to this method for consistency with the step methods of other classes.</span>
+
+<span class="sd">            :param dt: Integration interval - not used here.</span>
+<span class="sd">            :type dt: float</span>
+
+<span class="sd">            :return: The activation (level of stimulation) of the sensor.</span>
+<span class="sd">            :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">motor</span><span class="o">.</span><span class="n">speed</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MotorSpeedSensor.get_data">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.MotorSpeedSensor.get_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A function to get the data from an :class:`MotorSpeedSensor`, in the form of a string-keyed dict.</span>
+
+<span class="sd">            These data, as and when they are included in the returned dict, can be accessed with the following keys:</span>
+
+<span class="sd">            * data inherited from :class:`Sensor`: see :class:`Sensor`</span>
+<span class="sd">            * data of sensor&#39;s noise source, if it has one: ``data[&quot;noises&quot;]``</span>
+<span class="sd">            * sensor&#39;s current output (activation): ``data[&quot;activation&quot;]``</span>
+<span class="sd">            * history of sensor outputs (activations): ``data[&quot;activations&quot;]``</span>
+
+<span class="sd">            :return: The sensors&#39;s data.</span>
+<span class="sd">            :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;activations&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activations</span><span class="p">[:]</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noises&quot;</span><span class="p">]</span> <span class="o">=</span>  <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noisemaker</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noises&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noisemaker</span><span class="o">.</span><span class="n">get_data</span><span class="p">()[</span><span class="s2">&quot;noises&quot;</span><span class="p">][:]</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="MotorSpeedSensor.reset">
+<a class="viewcode-back" href="../../stimuli_sensors.html#Sandbox_V1_4.MotorSpeedSensor.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            A method to reset the sensor to its initial state, so that it can be reused in a later simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activations</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noisemaker</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noisemaker</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Chris Johnson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
