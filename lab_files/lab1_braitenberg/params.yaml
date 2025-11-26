@@ -2,8 +2,8 @@
 b_l: 0
 b_r: 0
 w_ll: 0
-w_rl: 0
-w_lr: 0
+w_rl: 100
+w_lr: 100
 w_rr: 0
 # left motor noise parameters
 white: 0
@@ -11,8 +11,30 @@ brown: 0
 spike: 0
 # simulation parameters
 n_runs: 1
-duration: 200
+duration: 50
 screen_width: 800
 animate: 1
-animation_frame_delay: 10
+animation_frame_delay: 2
 plot_data: 1
+
+# Homeostatic Plasticity Parameters (Phase 1 Experiment)
+enable_homeostasis: 1  # 1 for True (Enable Homeostasis), 0 for False (Standard Braitenberg)
+target_rate: 4      # The desired constant speed (firing rate) for the motors
+learning_rate: 0.1     # How fast the bias adapts (eta)
+
+# Environment Parameters (Phase 2 Experiment)
+light_brightness: 100.0  # 目标光强 (实验时可改为 0.5 或 10.0)
+
+# Lesion Experiment Parameters (Phase 3)
+enable_lesion: 1       # 1: 开启传感器损伤模拟, 0: 关闭 (Phase 1 & 2)
+lesion_start_time: 10 # 损伤发生的仿真时间点
+
+# Experiment 4: Sensory Deprivation (Blackout)
+# 将 enable_lesion 设为 1 开启此实验
+# 将 lesion_factor 设为 0.0 代表完全剥夺 (Blackout/Blindness)
+# 将 lesion_factor 设为 0.5 代表半损伤 (之前的 Phase 3)
+lesion_factor: 0.0
+
+# Experiment 5: Ambient Light Interference (The Fog)
+# 给所有传感器增加一个恒定的底噪背景值
+ambient_light: 0.0     # 设为 5.0 或 10.0 来开启高环境光实验
